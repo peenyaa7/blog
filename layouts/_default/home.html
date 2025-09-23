@@ -1,0 +1,122 @@
+{{ define "main" }}
+
+    {{ $pagesToShowBeforeLoad := 4 }}
+    {{ $pagesToShowEachLoad := 4 }}
+
+    {{/*  Hero  */}}
+    <div class="hero bg-base-200 min-h-[40vh] md:min-h-[50vh] rounded-xl">
+        <div class="hero-content text-center">
+            <div class="max-w-lg">
+                <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 dark:from-blue-400 dark:via-yellow-400 dark:to-orange-400 pb-8">
+                    {{ i18n "home.hero.title" }}
+                </h1>
+                <p class="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+                    {{ i18n "home.hero.subtitle" }}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-col gap-6 w-full items-center mt-10">
+
+        {{ $counter := 1 }}
+        {{ range site.RegularPages }}
+
+        <div class="p-[2px] rounded-xl bg-gradient-to-r from-primary to-accent w-full post {{ if gt $counter $pagesToShowBeforeLoad }}hidden{{ end }}">
+
+            <div class="flex flex-col gap-6 bg-base-200 rounded-xl p-6">
+                <!-- Card Header -->
+                <div class="flex items-center gap-2">
+
+                    <!-- Folder -->
+                    {{ with .Params.folders }}
+                        {{ range . }}
+                            <a href='{{ (printf "/folders/%s" (. | urlize)) | relLangURL }}' class="btn btn-xs btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="16" height="16" class="inline-block fill-current">
+                                    <!-- [Folder] !Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path d="M128 464L512 464C520.8 464 528 456.8 528 448L528 208C528 199.2 520.8 192 512 192L362.7 192C345.4 192 328.5 186.4 314.7 176L276.3 147.2C273.5 145.1 270.2 144 266.7 144L128 144C119.2 144 112 151.2 112 160L112 448C112 456.8 119.2 464 128 464zM512 512L128 512C92.7 512 64 483.3 64 448L64 160C64 124.7 92.7 96 128 96L266.7 96C280.5 96 294 100.5 305.1 108.8L343.5 137.6C349 141.8 355.8 144 362.7 144L512 144C547.3 144 576 172.7 576 208L576 448C576 483.3 547.3 512 512 512z"/>
+                                </svg>
+                                <span>{{ strings.FirstUpper . }}</span>
+                            </a>
+                        {{ end }}
+                    {{ end }}
+
+                    <!-- Published Date -->
+                    <div class="text-sm flex items-center gap-1 text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="16" height="16" class="inline-block fill-current text-gray-500">
+                            <!-- [Calendar] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                            <path d="M216 64C229.3 64 240 74.7 240 88L240 128L400 128L400 88C400 74.7 410.7 64 424 64C437.3 64 448 74.7 448 88L448 128L480 128C515.3 128 544 156.7 544 192L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 192C96 156.7 124.7 128 160 128L192 128L192 88C192 74.7 202.7 64 216 64zM480 496C488.8 496 496 488.8 496 480L496 416L408 416L408 496L480 496zM496 368L496 288L408 288L408 368L496 368zM360 368L360 288L280 288L280 368L360 368zM232 368L232 288L144 288L144 368L232 368zM144 416L144 480C144 488.8 151.2 496 160 496L232 496L232 416L144 416zM280 416L280 496L360 496L360 416L280 416zM216 176L160 176C151.2 176 144 183.2 144 192L144 240L496 240L496 192C496 183.2 488.8 176 480 176L216 176z"/>
+                        </svg>
+                        {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+                        {{ $dateHuman := .Date | time.Format ":date_long" }}
+                        <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+                    </div>
+    
+                </div>
+    
+                <!-- Card Body -->
+                <div class="flex flex-col gap-2">
+
+                    <!-- Card Title -->
+                    <a href="{{ .RelPermalink }}" class="text-2xl font-bold transition-colors duration-200 ease-in-out bg-clip-text text-transparent bg-gradient-to-r from-base-content to-base-content hover:from-primary hover:to-accent">
+                        {{ .LinkTitle }}
+                    </a>
+    
+                    <!-- Card Summary -->
+                    {{ with .Params.summary }}
+                        <span>
+                            {{ . | truncate 300  }}
+                        </span>
+                    {{ end }}
+                </div>
+    
+                <!-- Card Footer -->
+                <div class="flex justify-between items-center">
+                    
+                    <!-- Tags -->
+                    <div>
+                        {{ if .Params.tags }}
+                            {{ with .Params.tags }}
+                                {{ range . }}
+                                    <a href='{{ (printf "/tags/%s" (. | urlize)) | relLangURL }}' class="btn btn-xs btn-primary btn-outline mr-1 mb-1">
+                                        {{ strings.FirstUpper . }}
+                                    </a>
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+                    </div>
+
+                    <a href="{{ .RelPermalink }}" class="link link-accent link-hover text-nowrap">
+                        {{ i18n "home.card.read-more" }}
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        {{ $counter = add $counter 1 }}
+    
+        {{ end }}
+    </div>
+
+    {{ if gt .Site.RegularPages.Len $pagesToShowBeforeLoad }}
+        <div class="flex justify-center mt-10">
+            <button id="read-more" class="btn btn-primary btn-sm">
+                {{ i18n "home.load-more" }}
+            </button>
+            <script>
+                const btn = document.getElementById('read-more');
+                btn.addEventListener('click', () => {
+
+                    document.querySelectorAll('.post.hidden')
+                        .forEach((el, i) => { i < {{ $pagesToShowEachLoad }} && el.classList.remove('hidden')})
+
+                    if (document.querySelectorAll('.post.hidden').length == 0)
+                        btn.remove();
+                        
+                });
+            </script>
+        </div>
+    {{ end }}
+
+{{ end }}

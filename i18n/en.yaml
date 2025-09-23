@@ -1,0 +1,21 @@
+drawer.posts: Posts
+drawer.folders: Folders
+drawer.tags: Tags
+drawer.portfolio: Portfolio
+drawer.madeWithLove: Made with &hearts; by
+
+home.hero.title: Welcome to my blog!
+home.hero.subtitle: Reflections on development, technology, tinkering, and other experiences from my life.
+home.card.read-more: Read more →
+home.load-more: Load more
+
+single.back-to-posts: ← Back to posts
+
+toc.title: Content
+
+pagination.first: First
+pagination.last: Last
+
+folders.title: Folders
+folders.open-folder: View posts
+tags.title: Tags

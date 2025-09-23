@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+	lang="{{ or site.Language.LanguageCode site.Language.Lang }}"
+	dir="{{ or site.Language.LanguageDirection `ltr` }}"
+	data-theme="night"
+>
+
+	<head>
+		{{ partial "head.html" . }}
+	</head>
+
+	<body>
+		<div class='drawer drawer-end'>
+
+            <input id="drawer-toggler-button" type="checkbox" class="drawer-toggle" />
+
+			<div class="drawer-content">
+
+				<header>
+					{{ partial "header.html" . }}
+				</header>
+				<main class="container {{ if .IsPage }}max-w-6xl{{ else }}max-w-4xl{{ end }} mx-auto px-4 py-12 pt-20 min-h-[80vh]">
+					{{ block "main" . }}{{ end }}
+				</main>
+				<footer class="footer footer-center bg-base-300 p-4 mt-12">
+					{{ partial "footer.html" . }}
+				</footer>
+
+			</div>
+			<div class="drawer-side">
+                <label for="drawer-toggler-button" aria-label="close sidebar" class="drawer-overlay" ></label>
+
+                <div class='flex flex-col min-h-full bg-base-200 pt-16'>
+                    <div class="flex flex-col flex-1 p-4 w-60 gap-2">
+
+                            <a href='{{ relLangURL "posts" }}' class="btn btn-outline btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="20" height="20" class="inline-block fill-current text-current">
+                                    <!-- [File] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z"/>
+                                </svg>
+                                {{ i18n "drawer.posts" }}
+                            </a>
+                            
+                            <a href='{{ relLangURL "folders" }}' class="btn btn-outline btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="20" height="20" class="inline-block fill-current text-current">
+                                    <!-- [Open folder] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path d="M129.5 464L179.5 304L558.9 304L508.9 464L129.5 464zM320.2 512L509 512C530 512 548.6 498.4 554.8 478.3L604.8 318.3C614.5 287.4 591.4 256 559 256L179.6 256C158.6 256 140 269.6 133.8 289.7L112.2 358.4L112.2 160C112.2 151.2 119.4 144 128.2 144L266.9 144C270.4 144 273.7 145.1 276.5 147.2L314.9 176C328.7 186.4 345.6 192 362.9 192L480.2 192C489 192 496.2 199.2 496.2 208L544.2 208C544.2 172.7 515.5 144 480.2 144L362.9 144C356 144 349.2 141.8 343.7 137.6L305.3 108.8C294.2 100.5 280.8 96 266.9 96L128.2 96C92.9 96 64.2 124.7 64.2 160L64.2 448C64.2 483.3 92.9 512 128.2 512L320.2 512z"/>
+                                </svg>
+                                {{ i18n "drawer.folders" }}
+                            </a>
+                        
+                            <a href='{{ relLangURL "tags" }}' class="btn btn-outline btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="20" height="20" class="inline-block fill-current text-current">
+                                    <!-- [Hashtag] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path d="M278.7 64.7C296 68.4 307 85.4 303.3 102.7L284.2 192L410.7 192L432.7 89.3C436.4 72 453.4 61 470.7 64.7C488 68.4 499 85.4 495.3 102.7L476.2 192L544 192C561.7 192 576 206.3 576 224C576 241.7 561.7 256 544 256L462.4 256L435 384L502.8 384C520.5 384 534.8 398.3 534.8 416C534.8 433.7 520.5 448 502.8 448L421.2 448L399.2 550.7C395.5 568 378.5 579 361.2 575.3C343.9 571.6 332.9 554.6 336.6 537.3L355.7 448L229.2 448L207.2 550.7C203.5 568 186.5 579 169.2 575.3C151.9 571.6 140.9 554.6 144.6 537.3L163.8 448L96 448C78.3 448 64 433.7 64 416C64 398.3 78.3 384 96 384L177.6 384L205 256L137.2 256C119.5 256 105.2 241.7 105.2 224C105.2 206.3 119.5 192 137.2 192L218.8 192L240.8 89.3C244.4 72 261.4 61 278.7 64.7zM270.4 256L243 384L369.5 384L396.9 256L270.4 256z"/>
+                                </svg>
+                                {{ i18n "drawer.tags" }}
+                            </a>
+                        
+                            <a href="https://peenyaa.dev" class="btn btn-outline btn-accent">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="20" height="20" class="inline-block fill-current text-current">
+                                    <!-- [Card] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path d="M544 144C552.8 144 560 151.2 560 160L560 480C560 488.8 552.8 496 544 496L96 496C87.2 496 80 488.8 80 480L80 160C80 151.2 87.2 144 96 144L544 144zM96 96C60.7 96 32 124.7 32 160L32 480C32 515.3 60.7 544 96 544L544 544C579.3 544 608 515.3 608 480L608 160C608 124.7 579.3 96 544 96L96 96zM240 312C270.9 312 296 286.9 296 256C296 225.1 270.9 200 240 200C209.1 200 184 225.1 184 256C184 286.9 209.1 312 240 312zM208 352C163.8 352 128 387.8 128 432C128 440.8 135.2 448 144 448L336 448C344.8 448 352 440.8 352 432C352 387.8 316.2 352 272 352L208 352zM408 208C394.7 208 384 218.7 384 232C384 245.3 394.7 256 408 256L488 256C501.3 256 512 245.3 512 232C512 218.7 501.3 208 488 208L408 208zM408 304C394.7 304 384 314.7 384 328C384 341.3 394.7 352 408 352L488 352C501.3 352 512 341.3 512 328C512 314.7 501.3 304 488 304L408 304z"/>
+                                </svg>
+                                {{ i18n "drawer.portfolio" }}
+                            </a>
+                        
+                    </div>
+                    
+                    <p class='text-center pb-4'>
+                        Hecho con <span class='text-red-600'>&hearts;</span> por <a href='https://github.com/peenyaa7' class='link link-primary' target='_blank' rel='noreferrer noopener nofollow'>Peña</a>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+	</body>
+
+</html>

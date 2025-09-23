@@ -1,0 +1,55 @@
+<script>
+	(function () {
+		const theme = localStorage.getItem("theme") || "night";
+		setTheme(theme == "night");
+
+		window.addEventListener("DOMContentLoaded", () => {
+			const input = document.getElementById("theme-changer");
+			if (!input) return;
+
+			if (theme === "night") {
+				input.checked = true;
+				input.value = "night";
+			} else {
+				input.checked = false;
+				input.value = "fantasy";
+			}
+		});
+
+	})();
+
+	function toggleTheme() {
+		const current = document.documentElement.getAttribute("data-theme");
+		setTheme(current != "night");
+	}
+
+	function setTheme(isDark) {
+		const themeToChange = isDark ? "night" : "fantasy";
+		localStorage.setItem("theme", themeToChange);
+		document.documentElement.setAttribute("data-theme", themeToChange);
+		if (isDark) {
+			document.documentElement.setAttribute("class", "dark");
+		} else {
+			document.documentElement.removeAttribute("class");
+		}
+
+		const input = document.getElementById("theme-changer");
+		if (!input) return;
+		input.value = themeToChange;
+		input.setAttribute("data-toggle-theme", isDark ? "fantasy" : "night");
+
+	}
+</script>
+
+{{- with resources.Get "js/main.js" }}
+	{{- if eq hugo.Environment "development" }}
+		{{- with . | js.Build }}
+			<script src="{{ .RelPermalink }}"></script>
+		{{- end }}
+	{{- else }}
+		{{- $opts := dict "minify" true }}
+		{{- with . | js.Build $opts | fingerprint }}
+			<script src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous"></script>
+		{{- end }}
+	{{- end }}
+{{- end }}

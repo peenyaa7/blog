@@ -1,0 +1,104 @@
+{{ define "main" }}
+<h1 class="text-4xl md:text-4xl font-bold mb-6 flex items-center gap-2">
+	{{- $taxonomy := .Data.Singular -}}
+	{{- if eq $taxonomy "folder" -}}
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="48" height="48" class="inline-block fill-current text-current">
+			<!-- [Open folder] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+			<path d="M129.5 464L179.5 304L558.9 304L508.9 464L129.5 464zM320.2 512L509 512C530 512 548.6 498.4 554.8 478.3L604.8 318.3C614.5 287.4 591.4 256 559 256L179.6 256C158.6 256 140 269.6 133.8 289.7L112.2 358.4L112.2 160C112.2 151.2 119.4 144 128.2 144L266.9 144C270.4 144 273.7 145.1 276.5 147.2L314.9 176C328.7 186.4 345.6 192 362.9 192L480.2 192C489 192 496.2 199.2 496.2 208L544.2 208C544.2 172.7 515.5 144 480.2 144L362.9 144C356 144 349.2 141.8 343.7 137.6L305.3 108.8C294.2 100.5 280.8 96 266.9 96L128.2 96C92.9 96 64.2 124.7 64.2 160L64.2 448C64.2 483.3 92.9 512 128.2 512L320.2 512z"/>
+		</svg>
+	{{- else if eq $taxonomy "tag" -}}
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="40" height="40" class="inline-block fill-current text-current">
+			<!-- [Hashtag] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+			<path d="M278.7 64.7C296 68.4 307 85.4 303.3 102.7L284.2 192L410.7 192L432.7 89.3C436.4 72 453.4 61 470.7 64.7C488 68.4 499 85.4 495.3 102.7L476.2 192L544 192C561.7 192 576 206.3 576 224C576 241.7 561.7 256 544 256L462.4 256L435 384L502.8 384C520.5 384 534.8 398.3 534.8 416C534.8 433.7 520.5 448 502.8 448L421.2 448L399.2 550.7C395.5 568 378.5 579 361.2 575.3C343.9 571.6 332.9 554.6 336.6 537.3L355.7 448L229.2 448L207.2 550.7C203.5 568 186.5 579 169.2 575.3C151.9 571.6 140.9 554.6 144.6 537.3L163.8 448L96 448C78.3 448 64 433.7 64 416C64 398.3 78.3 384 96 384L177.6 384L205 256L137.2 256C119.5 256 105.2 241.7 105.2 224C105.2 206.3 119.5 192 137.2 192L218.8 192L240.8 89.3C244.4 72 261.4 61 278.7 64.7zM270.4 256L243 384L369.5 384L396.9 256L270.4 256z"/>
+		</svg>
+	{{- else if eq $taxonomy "category" -}}
+		<!-- Nothing for now -->
+	{{- else -}}
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="40" height="40" class="inline-block fill-current text-current">
+			<!-- [File] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+			<path d="M192 112L304 112L304 200C304 239.8 336.2 272 376 272L464 272L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 128C176 119.2 183.2 112 192 112zM352 131.9L444.1 224L376 224C362.7 224 352 213.3 352 200L352 131.9zM192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 250.5C512 233.5 505.3 217.2 493.3 205.2L370.7 82.7C358.7 70.7 342.5 64 325.5 64L192 64zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z"/>
+		</svg>
+	{{- end -}}
+	{{ .Title }}
+</h1>
+{{ .Content }}
+
+{{- if .Pages -}}
+
+
+<div>
+
+	{{- $pages := .Pages.GroupByDate "2006" -}}
+	{{- with .Site.Params.list.paginate | default .Site.Params.paginate -}}
+		{{- $pages = $.Paginate $pages . -}}
+	{{- else -}}
+		{{- $pages = .Paginate $pages -}}
+	{{- end -}}
+	
+	{{- range $pages.PageGroups -}}
+
+		<!--  Year post list  -->
+		<div class="mb-8">
+			
+			<!--  Year  -->
+			<div class="flex items-center mb-4">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="24" height="24" class="inline-block fill-current text-current">
+					<!-- [Calendar] !Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+					<path d="M216 64C229.3 64 240 74.7 240 88L240 128L400 128L400 88C400 74.7 410.7 64 424 64C437.3 64 448 74.7 448 88L448 128L480 128C515.3 128 544 156.7 544 192L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 192C96 156.7 124.7 128 160 128L192 128L192 88C192 74.7 202.7 64 216 64zM480 496C488.8 496 496 488.8 496 480L496 416L408 416L408 496L480 496zM496 368L496 288L408 288L408 368L496 368zM360 368L360 288L280 288L280 368L360 368zM232 368L232 288L144 288L144 368L232 368zM144 416L144 480C144 488.8 151.2 496 160 496L232 496L232 416L144 416zM280 416L280 496L360 496L360 416L280 416zM216 176L160 176C151.2 176 144 183.2 144 192L144 240L496 240L496 192C496 183.2 488.8 176 480 176L216 176z"/>
+				</svg>
+				<h2 class="text-2xl font-bold ml-2">
+					{{ .Key }}
+				</h2>
+			</div>
+			
+			<!--  Posts list  -->
+			<div class="flex flex-col gap-2">
+				{{- range .Pages -}}
+
+					<!--  Post  -->
+					<div class="flex rounded-lg border border-gray-300 dark:border-gray-700 p-4 transition-shadow duration-200 ease-in-out">
+						<div class="flex-1">
+
+							<!--  Title  -->
+							<article>
+								<a href="{{ .RelPermalink }}" class="link link-primary link-hover text-xl font-medium">
+									{{- .Title | emojify -}}
+								</a>
+							</article>
+
+							<!-- Folder -->
+							<div>
+								{{ with .Params.folders }}
+									{{ range . }}
+										<a href='{{ (printf "/folders/%s" (. | urlize)) | relLangURL }}' class="text-sm flex items-center gap-1 mt-1">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="16" height="16" class="inline-block fill-current">
+												<!-- [Folder] !Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+												<path d="M128 464L512 464C520.8 464 528 456.8 528 448L528 208C528 199.2 520.8 192 512 192L362.7 192C345.4 192 328.5 186.4 314.7 176L276.3 147.2C273.5 145.1 270.2 144 266.7 144L128 144C119.2 144 112 151.2 112 160L112 448C112 456.8 119.2 464 128 464zM512 512L128 512C92.7 512 64 483.3 64 448L64 160C64 124.7 92.7 96 128 96L266.7 96C280.5 96 294 100.5 305.1 108.8L343.5 137.6C349 141.8 355.8 144 362.7 144L512 144C547.3 144 576 172.7 576 208L576 448C576 483.3 547.3 512 512 512z"/>
+											</svg>
+											{{ strings.FirstUpper . }}
+										</a>
+									{{ end }}
+								{{ end }}
+							</div>
+						</div>
+						<div class="flex items-center">
+
+							<!--  Published date  -->
+							<span class="font-thin opacity-60">
+								{{- $.Site.Params.list.dateFormat | default "02 Jan" | .Date.Format -}}
+							</span>
+
+						</div>
+					</div>
+				{{- end -}}
+			</div>
+
+		</div>
+
+	{{- end -}}
+	{{- partial "pagination.html" . -}}
+</div>
+{{- end -}}
+
+
+{{ end }}

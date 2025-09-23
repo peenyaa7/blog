@@ -1,0 +1,12 @@
+{{ range .Headings }}
+    {{ if gt .Level 0 }}
+            {{ $rems := mul (sub .Level 1) 1 }}
+            <a href="#{{ .ID }}"
+                style="padding-left: {{ $rems }}rem;"
+                class="toc-level-{{ .Level }} block py-[1px] text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+            >
+                {{ .Title | htmlUnescape }}
+            </a>
+    {{ end }}
+    {{ partial "toc/toc_level.html" . }}
+{{ end }}

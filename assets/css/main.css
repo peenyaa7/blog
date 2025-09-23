@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@plugin daisyui {
+    themes: night --default --prefersdark, fantasy;
+}
+
+@custom-variant dark (&:where([data-theme=night], [data-theme=night] *));
+
+@layer utilities {
+    .prose h1,
+    .prose h2,
+    .prose h3,
+    .prose h4,
+    .prose h5,
+    .prose h6 {
+        @apply scroll-mt-20; /* To display headings after navbar */
+    }
+
+    /* Force to tables (inside markdown) to have horizontal scroll if needed */
+    .prose table {
+        display: block;
+        overflow-x: auto;
+        white-space: inherit;
+    }
+}

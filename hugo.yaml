@@ -1,0 +1,29 @@
+baseURL: https://blog.peenyaa.dev
+title: Peña | Blog
+defaultContentLanguage: es
+defaultContentLanguageInSubdir: true
+
+taxonomies:
+  tag: tags
+  category: categories
+  folder: folders
+
+markup:
+  tableOfContents:
+    startLevel: 1
+    includeCapitalize: true
+    includeLevel: 1
+    excludeCapitalize: false
+    excludeLevel: 1
+    endLevel: 3
+    ordered: false
+
+languages:
+  es:
+    languageCode: es
+    languageName: Español
+    weight: 1
+  en:
+    languageCode: en
+    languageName: English
+    weight: 2

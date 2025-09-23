@@ -1,0 +1,5 @@
+/resources
+/public
+/node_modules
+/content/posts/test-*
+/content/posts/mock-*

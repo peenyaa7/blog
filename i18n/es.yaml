@@ -1,0 +1,21 @@
+drawer.posts: Posts
+drawer.folders: Carpetas
+drawer.tags: Tags
+drawer.portfolio: Portfolio
+drawer.madeWithLove: Hecho con &hearts; por
+
+home.hero.title: ¡Bienvenido a mi blog!
+home.hero.subtitle: Reflexiones sobre desarrollo, tecnología, cacharreo y otras experiencias de mi vida.
+home.card.read-more: Leer más →
+home.load-more: Cargar más
+
+single.back-to-posts: ← Volver a los posts
+
+toc.title: Contenido
+
+pagination.first: Primero
+pagination.last: Último
+
+folders.title: Carpetas
+folders.open-folder: Ver posts
+tags.title: Tags
