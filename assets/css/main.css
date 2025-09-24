@@ -24,4 +24,31 @@
         overflow-x: auto;
         white-space: inherit;
     }
+
+    .prose strong {
+        @apply text-primary font-bold;
+    }
+
+    .prose em {
+        @apply text-secondary;
+    }
+
+    .prose a {
+        @apply hover:text-primary;
+    }
+
+    .prose blockquote {
+        @apply border-l-4 border-secondary pl-4 italic text-base opacity-90;
+    }
+
+    .prose table {
+        @apply w-full border-collapse text-sm;
+    }
+    .prose th, .prose td {
+        @apply border border-base-200 px-3 py-2;
+    }
+    .prose thead {
+        @apply bg-base-300 text-secondary font-semibold;
+    }
+
 }
