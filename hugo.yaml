@@ -1,7 +1,7 @@
 baseURL: https://blog.peenyaa.dev
 title: Peña | Blog
 defaultContentLanguage: es
-defaultContentLanguageInSubdir: true
+defaultContentLanguageInSubdir: false
 
 taxonomies:
   tag: tags
