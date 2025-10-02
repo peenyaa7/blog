@@ -51,4 +51,14 @@
         @apply bg-base-300 text-secondary font-semibold;
     }
 
+    .prose li > p, .prose ul, .prose ol {
+        @apply my-0;
+    }
+    .prose li {
+        @apply my-2;
+    }
+    .prose p:has(+ ul), .prose p:has(+ ol) {
+        @apply mb-2;
+    }
+
 }

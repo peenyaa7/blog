@@ -4200,6 +4200,20 @@ html {
   color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
 }
 
+.prose li > p, .prose ul, .prose ol {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p:has(+ ul), .prose p:has(+ ol) {
+  margin-bottom: 0.5rem;
+}
+
 @plugin daisyui {
   themes: night --default --prefersdark, fantasy;
 }
