@@ -77,6 +77,9 @@ jobs:
           key: hugo-${{ github.run_id }}
           restore-keys:
             hugo-
+      - name: Generate Open Graph images
+        run: |
+          node scripts/og-generator.js
       - name: Build the site
         run: |
           hugo \
