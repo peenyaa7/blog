@@ -1,11 +1,11 @@
 ---
-title: '002 Permissions'
-summary: ''
+title: 'Permisos en TrueNAS: UNIX, POSIX ACL y NFSv4 ACL'
+summary: 'En este post te explico los diferentes tipos de permisos que existen en TrueNAS, sus ventajas y desventajas, y cuándo utilizar cada uno de ellos. ¡No te lo pierdas!'
 date: 2025-11-13T20:11:52+01:00
-slug: ''
+slug: 'truenas-permissions-unix-posix-nfsv4'
 draft: true
-tags: []
-folders: [] # Max 1 folder
+tags: ["permisos", "sistemas de archivos"]
+folders: ["TrueNAS"] # Max 1 folder
 hideTableOfContent: false
 ---
 
@@ -25,10 +25,10 @@ La primera columna del comando `ls` muestra los permisos de cada archivo y se di
 ![unix-permissions-structure](unix-permissions-structure.png)
 
 Como ves, estos permisos se dividen en cuatro partes:
-1. `Type` -> El tipo de archivo. Los más comunes son `-` (archivo normal), `d` (directorio) y `l` (enlace simbólico). Puedes encontrar la lista completa [aqui](https://en.wikipedia.org/wiki/Unix_file_types#Symbolic).
-2. `User` -> Los permisos del usuario propietario (`peenyaa7`) en formato `rwx`.
-3. `Group` -> Los permisos del grupo propietario (`devteam`) en formato `rwx`.
-4. `Others` -> Los permisos de los demás usuarios, también en formato `rwx`.
+1. `Type` → El tipo de archivo. Los más comunes son `-` (archivo normal), `d` (directorio) y `l` (enlace simbólico). Puedes encontrar la lista completa [aquí](https://en.wikipedia.org/wiki/Unix_file_types#Symbolic).
+2. `User` → Los permisos del usuario propietario (`peenyaa7`) en formato `rwx`.
+3. `Group` → Los permisos del grupo propietario (`devteam`) en formato `rwx`.
+4. `Others` → Los permisos de los demás usuarios, también en formato `rwx`.
 
 Cada conjunto de permisos (`rwx`) se compone de tres letras que representan los siguientes permisos básicos:
 
@@ -58,11 +58,11 @@ Los permisos POSIX (*Portable Operating System Interface*) es una estándar de l
 ¿Qué añaden? Además de tener la funcionalidad de los permisos UNIX (`rwxrw----`), son capaces de establecer permisos específicos a cada usuario o grupo de forma independiente, lo que conocemos como ACL (*Access Control List*)
 
 ````bash
-user::rwx       # Usuario propietario con todos los permisos (rwx)
-group::r-x      # Grupo propietario con lectura y ejecución
-other::---      # Los demás no tienen permisos de ningún tipo
-user:javi:rw-   # Usuario 'javi' con permisos especiales de lectura y escritura
-group:devs:r–-  # Grupo 'devs' con permisos especiales (solo lectura)
+user::rwx           # Usuario propietario con todos los permisos (rwx)
+group::r-x          # Grupo propietario con lectura y ejecución
+other::---          # Los demás no tienen permisos de ningún tipo
+user:peenyaa7:rw-   # Usuario 'peenyaa7' con permisos especiales de lectura y escritura
+group:devs:r–-      # Grupo 'devs' con permisos especiales (solo lectura)
 ````
 
 En TrueNAS, puedes ver y editar estos permisos desde la interfaz web:
@@ -120,7 +120,7 @@ Indica las marcas ACE que agregan contexto adicional a la ACL. Definen cómo se 
 | `n`  | no-propagate-inherit | Los **subdirectorios** tendrán las mismas marcas ACE (`type`, `principal` y `permissions`) excluyendo las marcas de herencia (`flags`). |
 | `i`  | inherit-only | Los **archivos** y **subdirectorios** heredarán las mismas marcas ACE (`type`, `flags`, `principal` y `permissions`) pero esta ACE tendrá los `flags` a null. Se utiliza para crear "plantillas" de permisos que heredarán los hijos. |
 
-> Las marcas de herencia (`flags`) estarán **vacias** si el `principal` es un `principal` especial (`OWNER@` u `EVERYONE@`).
+> Las marcas de herencia (`flags`) estarán **vacías** si el `principal` es un `principal` especial (`OWNER@` u `EVERYONE@`).
 > 
 > En el caso de que el `principal` sea un **grupo** (`GROUP@` o `group@example.com`), se añadirá la marca `g` (group) a las `flags`. 
 
@@ -151,7 +151,7 @@ Por último, los `permissions` indican el acceso del `principal`. Cada permiso s
 | `D`   | ❌ *No aplica* | Borrar el contenido de la carpeta (archivos y subcarpetas) |
 | `t`   | Leer los atributos del archivo como permisos básicos (no ACLs), propietario, tamaño, etc. | Leer los atributos de la carpeta |
 | `T`   | Modificar los atributos del archivo | Modificar los atributos de la carpeta |
-| `n`     | Leer los "named attributes", que son metadatos adicionales personalizos (no siempre están presentes) | Leer los "named attributes" de la carpeta |
+| `n`     | Leer los "named attributes", que son metadatos adicionales personalizados (no siempre están presentes) | Leer los "named attributes" de la carpeta |
 | `N`     | Modificar los "named attributes" | Modificar los "named attributes" de la carpeta |
 | `c`     | Leer la ACL del archivo | Leer la ACL de la carpeta |
 | `C`     | Modificar la ACL del archivo | Modificar la ACL de la carpeta |
@@ -172,3 +172,55 @@ Existen alias (`R`, `W` y `X`) que pueden ser utilizados para simplificar la esc
 | Herencia real de permisos. | Las más difíciles de leer y entender. |
 | Control muy granular. | Pueden romperse si se cambian los permisos desde la CLI |
 | Traducción directa al modelo de Windows (NTFS). |  |
+
+# Qué utilizar en cada caso y por qué
+
+Aunque la opción más flexible (y compleja) es la recomendada por sí en un futuro se quiere extender los permisos, aquí te dejo unos cuantos ejemplos realistas de que utilizar en cada situación si no quieres calentarte mucho la cabeza:
+
+## Caso 1: Carpeta personal en el mismo equipo
+
+En este caso lo recomendado son los *permisos UNIX*, porque es una carpeta donde solo el usuario propietario accederá (y nadie más debería acceder). Además, estos permisos son los mas rápidos y seguros.
+
+```bash
+# Ejemplo donde solo el usuario propietario tiene acceso a su carpeta personal:
+drwx------  peenyaa7    devteam     /home/peenyaa7
+```
+
+## Caso 2: Carpeta compartida en el mismo equipo
+
+Si en un mismo dispositivo se desea que varios usuarios de un grupo concreto accedan a una carpeta, también se recomienda utilizar *permisos UNIX*, ya que estos soportan permisos por grupo y no se necesita permisos específicos por usuario.
+
+> ⚠️ Eso si, si queremos compartirla la carpeta por red en un futuro mejor ver el siguiente caso.
+
+```bash
+# Ejemplo donde varios usuarios del grupo 'devteam' pueden acceder a la carpeta compartida:
+drwxrwx---  root    devteam     /srv/development
+```
+
+## Caso 3: Carpeta compartida por red (SMB)
+
+Si quieres compartir una carpeta por SMB con uno o varios usuarios, lo más recomendable es utilizar *POSIX ACL o NFSv4 ACL* por que puedes asignar permisos específicos a los usuarios/grupos deseados sin modificar los permisos del usuario o grupo propietarios. Además, NTFS (Windows) entenderá correctamente estos permisos y los mostrará de buena manera en la pestaña de “Seguridad”.
+
+(Échale un ojo a la siguiente sección para decidir entre POSIX o NFSv4 😉)
+
+# Problemas de mezclarnos
+
+En TrueNAS, uno de los problemas más recurrentes es mezclar permisos de diferentes tipos entre datasets padre e hijo.
+
+Si tenemos un dataset padre con permisos de un tipo (NFSv4 ACL por ejemplo) y un dataset hijo con otro tipo (POSIX ACL o UNIX), el sistema no sabrá cómo interpretar los permisos heredados del padre y aplicarlos (traducirlos) correctamente al hijo. En este punto, es cuando aparecen los problemas: usuarios con permisos que no pueden acceder (*o aplicaciones que no pueden acceder y no arrancan*), usuarios que se le ha denegado explícitamente un permiso y de repente lo tiene, etc.
+
+> Para ir al grano: mezclar tipos de permisos rompe la coherencia, la herencia y la compatibilidad entre sistemas operativos y la seguridad. **Así que elige siempre un tipo de permiso y mantenlo para todo el árbol de datasets**.
+
+## ¿Cómo sé si tengo que utilizar POSIX ACL o NFSv4?
+
+Para simplificarlo y no rizar más el rizo te voy a dejar un resumen:
+
+| Utiliza POSIX si: | Utiliza NFSv4 si: |
+| :---- | :---- |
+| Solo necesitas permisos básicos (`rwx`) adicionales para usuarios o grupos | Si compartes por NFSv4 y no por SMB (en este caso es obligatorio utilizar NFSv4)
+| No quieres denegar un permisos explícito a un usuario | Necesitas granularidad en tus permisos (por ejemplo, que un usuario pueda crear archivos pero no borrarlos)
+| No necesitas herencia compleja | Quieres permisos tipo NTFS y no los básicos (`rwx`) extendidos |
+
+---
+
+Si has llegado hasta aquí, ¡gracias por leerme! Espero que esta explicación te haya ayudado a entender un poco mejor los permisos en TrueNAS y cómo utilizarlos correctamente. Si tienes alguna duda o quieres que profundice en algún tema, no dudes en decírmelo. ¡Nos vemos en el próximo post! 👋
