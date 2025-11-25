@@ -1,15 +1,17 @@
 ---
-title: 'Permisos en TrueNAS: UNIX, POSIX ACL y NFSv4 ACL'
+title: 'Permisos en TrueNAS: diferencia entre UNIX, POSIX ACL y NFSv4 ACL (con ejemplos reales)'
 summary: 'En este post te explico los diferentes tipos de permisos que existen en TrueNAS, sus ventajas y desventajas, y cuándo utilizar cada uno de ellos. ¡No te lo pierdas!'
 date: 2025-11-13T20:11:52+01:00
 slug: 'truenas-permissions-unix-posix-nfsv4'
-draft: true
+draft: false
 tags: ["permisos", "sistemas de archivos"]
 folders: ["TrueNAS"] # Max 1 folder
 hideTableOfContent: false
 ---
 
 Los permisos es una de las cosas más fáciles de explicar y de entender cuando empiezas en el mundo de los sistemas de archivos, pero también es el causante de la gran mayoría de los problemas cuando compartimos carpetas en red o cuando instalamos una nueva aplicación en nuestro TrueNAS, así que veamos una breve explicación de cada uno de ellos.
+
+(Si quieres saltarte la explicación y ver directamente qué permisos utilizar en cada caso, ve al final del post 😉)
 
 # Permisos UNIX
 
@@ -57,13 +59,50 @@ Los permisos POSIX (*Portable Operating System Interface*) es una estándar de l
 
 ¿Qué añaden? Además de tener la funcionalidad de los permisos UNIX (`rwxrw----`), son capaces de establecer permisos específicos a cada usuario o grupo de forma independiente, lo que conocemos como ACL (*Access Control List*)
 
+## Estructura de una ACL POSIX
+
+La estructura de una ACL POSIX es bastante sencilla y cada entrada sigue la siguiente estructura:
+
+```bash
+# Estructura ACE (Access Control Entry) POSIX:
+tipo:identificador:permisos
+```
+
+Donde:
+
+| Parte         | Significado                          |
+|---------------|--------------------------------------|
+| `tipo`        | Puede ser `user` (usuario), `group` (grupo), `other` (otros) o vacío (propietario o grupo propietario). |
+| `identificador` | El nombre del usuario o grupo específico. Si `tipo` es `usuario` o `grupo`, puede estar vacío para referirse al propietario o grupo propietario respectivamente. Si `tipo` es `otros` o `mask`, siempre estará vacío. |
+| `permisos`    | Los permisos en formato `rwx`.      |
+
 ````bash
+# Ejemplo de una ACL POSIX:
 user::rwx           # Usuario propietario con todos los permisos (rwx)
-group::r-x          # Grupo propietario con lectura y ejecución
-other::---          # Los demás no tienen permisos de ningún tipo
-user:peenyaa7:rw-   # Usuario 'peenyaa7' con permisos especiales de lectura y escritura
-group:devs:r–-      # Grupo 'devs' con permisos especiales (solo lectura)
+group::r-x          # Grupo propietario con lectura y ejecución (r-x)
+other::---          # Los demás no tienen permisos de ningún tipo (---)
+user:peenyaa7:rw-   # Usuario 'peenyaa7' con permisos especiales de lectura y escritura (rw-)
+group:devs:r–-      # Grupo 'devs' con permisos especiales de solo lectura (r–-)
+mask::rwx           # Máscara de permisos (rwx)
 ````
+
+## ¿Qué es la máscara de permisos (`mask`) en POSIX ACL?
+
+La máscara de permisos (`mask`) es una entrada especial en las ACL POSIX que actúa como un **filtro** para los permisos efectivos de los usuarios y grupos adicionales (*no propietarios*). Define el máximo nivel de permisos que pueden tener estos usuarios y grupos. Si un usuario o grupo tiene permisos que exceden los definidos en la máscara, esos permisos se reducen al nivel de la máscara.
+
+Por ejemplo, si tienes la siguiente ACL POSIX:
+
+```bash
+user::rwx
+group::r-x
+other::---
+user:peenyaa7:rwx
+mask::r--
+```
+
+En este caso, aunque el usuario `peenyaa7` tiene permisos `rwx`, la máscara `r--` limita sus permisos efectivos a solo `r--` (lectura). Por lo tanto, `peenyaa7` solo podrá leer el archivo, pero no escribirlo ni ejecutarlo.
+
+---
 
 En TrueNAS, puedes ver y editar estos permisos desde la interfaz web:
 
@@ -173,7 +212,7 @@ Existen alias (`R`, `W` y `X`) que pueden ser utilizados para simplificar la esc
 | Control muy granular. | Pueden romperse si se cambian los permisos desde la CLI |
 | Traducción directa al modelo de Windows (NTFS). |  |
 
-# Qué utilizar en cada caso y por qué
+# Qué permisos elegir en TrueNAS según tu caso
 
 Aunque la opción más flexible (y compleja) es la recomendada por sí en un futuro se quiere extender los permisos, aquí te dejo unos cuantos ejemplos realistas de que utilizar en cada situación si no quieres calentarte mucho la cabeza:
 
