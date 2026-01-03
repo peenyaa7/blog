@@ -43,12 +43,12 @@ Tras procesar los datos, si calculamos el gasto medio por día y el coste de cad
 
 | Configuración | Gasto medio (kWh) | Coste al día (€) | Coste al mes (€) | Coste al año (€) |
 | :---- | :---- | :---- | :---- | :---- |
-| **1** *(24h)* | 1,756 kWh | 0,246€ | 7,38€ | 89,73€ |
-| **2** *(16h)* | 2,337 kWh | 0,327€ | 9,82€ | 119,42€ |
-| **3** *(10h)* | 2,237 kWh | 0,313€ | 9,40€ | 114,31€ |
-| **4** *(4h)*  | 2,008 kWh | 0,281€ | 8,43€ | 102,61€ |
+| **1** *(24h)* | 1'756 kWh | 0'246€ | 7'38€ | 89'73€ |
+| **2** *(16h)* | 2'337 kWh | 0'327€ | 9'82€ | 119'42€ |
+| **3** *(10h)* | 2'237 kWh | 0'313€ | 9'40€ | 114'31€ |
+| **4** *(4h)*  | 2'008 kWh | 0'281€ | 8'43€ | 102'61€ |
 
-> **Nota 1**: El coste por kWh utilizado en los cálculos es de **0,14€/kWh**, ya que el coste medio de mis últimas facturas de luz ha sido de 0,1393€/kWh. Puedes ver el precio de la luz en el siguiente enlace: https://tarifaluzhora.es/ 
+> **Nota 1**: El coste por kWh utilizado en los cálculos es de **0'14€/kWh**, ya que el coste medio de mis últimas facturas de luz ha sido de 0'1393€/kWh. Puedes ver el precio de la luz en el siguiente enlace: https://tarifaluzhora.es/ 
 > 
 > **Nota 2**: Los costes mensuales y sobretodo, el anual, **son aproximados**. Ten en cuenta que los datos están basados en el gasto medio diario de los meses más fríos del año, por lo que el gasto anual real puede ser menor.
 
