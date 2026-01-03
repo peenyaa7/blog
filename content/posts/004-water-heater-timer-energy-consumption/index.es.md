@@ -3,7 +3,7 @@ title: '¿Apagar el termo realmente ahorra dinero? Mi experimento'
 summary: '¿Vale la pena ponerle un temporizador al termo de agua caliente? He comparado 4 configuraciones distintas, desde el "siempre encendido" hasta la programación por horas. En este post te muestro los gastos diarios reales para que descubras si estás ahorrando o tirando el dinero.'
 date: 2025-12-29T10:12:05+01:00
 slug: 'water-heater-timer-energy-consumption'
-draft: true
+draft: false
 tags: ["ahorro", "energía", "termo", "domótica"]
 folders: ["Domótica"] # Max 1 folder
 hideTableOfContent: false

@@ -3,7 +3,7 @@ title: 'Does turning off the water heater really save money? My experiment'
 summary: 'Is it worth using a timer on an electric water heater? I compared four different configurations, from “always on” to time-based scheduling. In this post I show real daily costs so you can see whether you are actually saving money or just wasting it.'
 date: 2025-12-29T10:12:05+01:00
 slug: 'water-heater-timer-energy-consumption'
-draft: true
+draft: false
 tags: ["savings", "energy", "water-heater", "home-automation"]
 folders: ["Home Automation"]
 hideTableOfContent: false
