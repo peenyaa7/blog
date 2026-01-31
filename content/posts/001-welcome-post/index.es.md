@@ -1,7 +1,7 @@
 ---
 title: '¡Bienvenidos a mi blog!'
 summary: 'Inauguro este blog con este primer post de bienvenida. Entra y descubre mis motivaciones para empezar este proyecto 😉'
-date: 2025-10-01T19:46:36+02:00
+date: 1998-01-09T12:00:00+01:00
 slug: 'welcome-post'
 tags: ["reflexión"]
 folders: ["Personal"]

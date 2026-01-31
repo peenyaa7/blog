@@ -1,7 +1,7 @@
 ---
 title: 'Welcome to my blog!'
 summary: 'I am launching this blog with this first welcome post. Come in and discover my motivations for starting this project. 😉'
-date: 2025-10-01T19:46:36+02:00
+date: 1998-01-09T12:00:00+01:00
 slug: 'welcome-post'
 tags: ["reflection"]
 folders: ["Personal"]
