@@ -15,7 +15,7 @@ hideTableOfContent: false
 
 En esta guía encontrarás: los componentes necesarios, la guía de montaje (con fotos), coste, trucos y solución de problemas para hacer este teclado desde cero.
 
-El nombre del teclado es *SofleRGB v2.1*, aunque en la guía nos referiremos a él como *Sofle*.
+El nombre del teclado es *Sofle RGB v2.1*, aunque en la guía nos referiremos a él como *Sofle*.
 
 # Antes de comenzar
 
@@ -23,7 +23,7 @@ El nombre del teclado es *SofleRGB v2.1*, aunque en la guía nos referiremos a �
 
 Me gustaría empezar con esta sección para **dejar claro cada concepto** que se utiliza en la guía. La mayoría de los terminos utilizados en la guía se utiliza de forma estandarizada, pero no todos somos electrónicos con experiencia por lo que te dejo cada concepto con su definición para que cualquiera pueda hacer su propio teclado desde cero.
 
-> **Cuando no sepas algún concepto vuelve a esta sección**
+> **Cuando no sepas algún concepto, vuelve a esta sección 😉**
 
 ### Pads y Silkscreen
 
@@ -142,7 +142,7 @@ Cada diodo suele tener una pequeña marca que indica el *cátodo* del diodo; te 
 
 ![Esquema del diodo](./diode_schema.jpg)
 
-En la placa, en cada posición de diodo, hay una pequeña marca que indica la posición correcta del diodo:
+En la PCB, en cada posición de diodo, hay una pequeña marca que indica la posición correcta del diodo:
 
 ![Marcas silkscreen del diodo](./diode_silkscreen_marks.png)
 
