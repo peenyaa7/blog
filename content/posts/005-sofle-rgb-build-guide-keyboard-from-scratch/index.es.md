@@ -300,6 +300,8 @@ Y por el otro lado, como ya he mencionado, las soldaduras deben quedar en el “
 
 El promicro es el controlador o cerebro de nuestro teclado, el que recibirá todas las órdenes y se pondrá en contacto con el ordenador de forma correcta.
 
+![Promicro y pin header](./promicro_with_pin_header_components.jpg)
+
 Se sitúa en la **parte superior de la PCB**, justo donde hemos puesto los Socket Headers del promicro anteriormente.
 
 > ⚠️ Verifica que tipo de USB utiliza el promicro que has adquirido. En mi caso es de tipo USB-C.
@@ -343,7 +345,14 @@ Normalmente, al adquirir una pantalla OLED, ya viene con los pines soldados, por
 
 ## 12. Encoders
 
-Los encoders son un componente que nos añade funcionalidad extra al teclado. Además, *no perdemos la pulsación* ya que los encoders tienen pulsación.
+Los encoders son un componente que nos añade funcionalidad extra al teclado. Además, *no perdemos la pulsación* ya que los encoders tienen pulsación. En mi caso los utilizaré para:
+
+- Cambiar el color y el brillo de los LEDs
+- Modificar el volumen del ordenador
+- Reproducir/Pausar música al pulsar el encoder
+- Sacar captura de pantalla al pulsar el otro encoder
+- Moverse entre caracteres/palabras dentro de un texto
+- ...
 
 Se sitúa en la **parte superior de la PCB**, justo debajo de los TRRS:
 

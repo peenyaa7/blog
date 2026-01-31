@@ -300,6 +300,8 @@ And on the other side, as I mentioned, the solder joints should be on the “wro
 
 The Promicro is the controller or brain of our keyboard, which will receive all commands and communicate with the computer correctly.
 
+![Promicro and pin header](./promicro_with_pin_header_components.jpg)
+
 It is located at the **top of the PCB**, right where we previously placed the Promicro socket headers.
 
 > ⚠️ Check what type of USB your Promicro uses. In my case, it is USB-C.
@@ -343,7 +345,14 @@ Normally, when you purchase an OLED screen, it comes with the pins already solde
 
 ## 12. Encoders
 
-Encoders are components that add extra functionality to the keyboard. In addition, *we don't lose the keystroke* because the encoders have a keystroke.
+Encoders are a component that adds extra functionality to the keyboard. In addition, *we don't lose the keystroke* because encoders have keystrokes. In my case, I will use them to:
+
+- Change the color and brightness of the LEDs
+- Modify the volume of the computer
+- Play/Pause music by pressing the encoder
+- Take a screenshot by pressing the other encoder
+- Move between characters/words within a text
+- ...
 
 They are located at the **top of the PCB**, just below the TRRS:
 
